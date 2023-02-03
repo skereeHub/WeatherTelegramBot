@@ -1,9 +1,13 @@
 import logging
 
 from aiogram import Bot, Dispatcher
+from aiogram.types import ParseMode
+from motor.motor_asyncio import AsyncIOMotorClient
 
 from . import filters
 from . import handlers
+from . import commands
+from .config import load_config
 
 
 logging.basicConfig(
@@ -13,9 +17,15 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-async def run(token: str):
-	bot = Bot(token)
+async def run():
+	config = load_config()
+
+	bot = Bot(config.tg_token, parse_mode = ParseMode.MARKDOWN_V2)
 	dp = Dispatcher(bot)
+	
+	bot.config = config
+	bot.database = AsyncIOMotorClient(config.mongo_url).WeatherTelegramBot
+	await commands.register(bot)
 
 	filters.register(dp)
 	handlers.register(dp)
