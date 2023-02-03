@@ -7,7 +7,8 @@ MenuKeyboard = ReplyKeyboardMarkup(
 			KeyboardButton(text = 'Get weather')
 		],
 		[
-			KeyboardButton(text = 'Set weather', request_location = True)
+			KeyboardButton(text = 'Set location', request_location = True)
 		]
-	]
+	],
+	resize_keyboard = True
 )

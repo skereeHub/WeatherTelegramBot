@@ -2,6 +2,7 @@ import logging
 
 from aiogram import Bot, Dispatcher
 
+from . import filters
 from . import handlers
 
 
@@ -16,6 +17,7 @@ async def run(token: str):
 	bot = Bot(token)
 	dp = Dispatcher(bot)
 
+	filters.register(dp)
 	handlers.register(dp)
 
 	logger.info('Starting bot')
