@@ -1,5 +1,9 @@
 from aiogram import Dispatcher
 
+from . import admin
+from . import client
+
 
 def register(dp: Dispatcher):
-	pass
+	admin.register(dp)
+	client.register(dp)
